@@ -1,12 +1,14 @@
 package blackjack.rst;
 
+import java.awt.*;
 import java.util.*;
-import java.util.Random;
 import javax.swing.*;
 
 public class DeckOfCards {
 
-    //this is a comment
+    public static JFrame frame = new JFrame();
+    public static JLabel valuePlbl = new JLabel();
+
     String[] buttonRP = {"Keep playing", "Cash Out"};
     String[] buttons = {"Hit", "Stand"};
     String[] suit = {"Clubs", "Diamonds", "Hearts", "Spades"};
@@ -28,26 +30,52 @@ public class DeckOfCards {
             }
         }
 
-        for (int x = 0; x < 52; x++) {
-            // System.out.println(deckTemp[x]);
-        }
-        JOptionPane.showMessageDialog(null, "Welcome to BlackJack!\nYour starting value is $3000.");
+        graphics();
+//
+//        JOptionPane.showMessageDialog(null, "Welcome to BlackJack!\nYour starting value is $3000.");
+//
+//        do {
+//
+//            shuffle();
+//            playgame();
+//
+//            int choiceR = JOptionPane.showOptionDialog(null, "Would you like to keep playing.", "Replay",
+//                    JOptionPane.INFORMATION_MESSAGE, 1, null, buttonRP, buttonRP[0]);
+//
+//            if (choiceR == JOptionPane.NO_OPTION || money < 0) {
+//                replay = false;
+//            }
+//
+//        } while (replay);
+//        JOptionPane.showMessageDialog(null, "Thanks for playing!");
+//        System.exit(0);
+    }
 
-        do {
-            
-            shuffle();
-            playgame();
+    public void graphics() {
 
-            int choiceR = JOptionPane.showOptionDialog(null, "Would you like to keep playing.", "Replay",
-                    JOptionPane.INFORMATION_MESSAGE, 1, null, buttonRP, buttonRP[0]);
-            
-            if (choiceR == JOptionPane.NO_OPTION || money < 0) {
-                replay = false;
-            }
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setSize(1200, 750);
+        frame.setLayout(null);
+        frame.setVisible(true);
+        frame.setTitle("BlackJack");
+        frame.setLocationRelativeTo(null);
+        
+        JLabel background = new JLabel();
+        frame.add(valuePlbl);
+        frame.add(background);
 
-        } while (replay);
-        JOptionPane.showMessageDialog(null, "Thanks for playing!");
-        System.exit(0);
+        background.setBounds(0, 0, 1200, 750);
+        
+        valuePlbl.setForeground(Color.WHITE);
+
+        valuePlbl.setBounds( 600, 525, 10, 10);
+        
+        
+        background.setIcon(new ImageIcon("images/blackjackTable.jpg"));
+        valuePlbl.setText(Integer.toString(valueP));
+
+        
+
     }
 
     public void shuffle() {
@@ -58,10 +86,10 @@ public class DeckOfCards {
             deckTemp[r] = deckTemp[i];
             deckTemp[i] = temp;
         }
-
     }
 
     private void playgame() throws InterruptedException {
+        int choice = 0;
         valueP = 0;
         valueD = 0;
         i = 0;
@@ -84,8 +112,14 @@ public class DeckOfCards {
         System.out.println("The dealer drew an unknown card.");
         System.out.println("You are now at a value of " + valueP + ".");
         do {
-            int choice = JOptionPane.showOptionDialog(null, "Would you like to Hit or Stand.", "Play choice.",
-                    JOptionPane.INFORMATION_MESSAGE, 1, null, buttons, buttons[0]);
+            if (valueP != 21) {
+                choice = JOptionPane.showOptionDialog(null, "Would you like to Hit or Stand.", "Play choice.",
+                        JOptionPane.INFORMATION_MESSAGE, 1, null, buttons, buttons[0]);
+            } else if (valueP == 21) {
+                JOptionPane.showMessageDialog(null, "You have chosen to stand on 21.");
+                Thread.sleep(1000);
+                choice = JOptionPane.NO_OPTION;
+            }
 
             if (choice == JOptionPane.OK_OPTION) {
                 drawP();
@@ -153,7 +187,6 @@ public class DeckOfCards {
                 System.out.println("---------=============---------");
                 checkB = false;
             }
-
         }
     }
 
@@ -161,34 +194,54 @@ public class DeckOfCards {
         System.out.println("The dealer drew the " + deckTemp[i] + ".");
         if (deckTemp[i].charAt(0) == '2') {
             valueD = valueD + 2;
+            valuePlbl.setText(Integer.toString(valueP));
+            //valuePlbl.setText(null);
 
         } else if (deckTemp[i].charAt(0) == '3') {
             valueD = valueD + 3;
+            valuePlbl.setText(Integer.toString(valueP));
+            //valuePlbl.setText(null);
 
         } else if (deckTemp[i].charAt(0) == '4') {
             valueD = valueD + 4;
-
+            valuePlbl.setText(Integer.toString(valueP));
+            //valuePlbl.setText(null);
+            
         } else if (deckTemp[i].charAt(0) == '5') {
             valueD = valueD + 5;
-
+            valuePlbl.setText(Integer.toString(valueP));
+            //valuePlbl.setText(null);
+            
         } else if (deckTemp[i].charAt(0) == '6') {
             valueD = valueD + 6;
-
+            valuePlbl.setText(Integer.toString(valueP));
+            //valuePlbl.setText(null);
+            
         } else if (deckTemp[i].charAt(0) == '7') {
             valueD = valueD + 7;
-
+            valuePlbl.setText(Integer.toString(valueP));
+            //valuePlbl.setText(null);
+            
         } else if (deckTemp[i].charAt(0) == '8') {
             valueD = valueD + 8;
-
+            valuePlbl.setText(Integer.toString(valueP));
+            //valuePlbl.setText(null);
+            
         } else if (deckTemp[i].charAt(0) == '9') {
             valueD = valueD + 9;
-
+            valuePlbl.setText(Integer.toString(valueP));
+           // valuePlbl.setText(null);
+            
         } else if (deckTemp[i].charAt(0) == 'A') {
             valueD = valueD + 11;
-
+            valuePlbl.setText(Integer.toString(valueP));
+           // valuePlbl.setText(null);
+            
         } else {
             valueD = valueD + 10;
-
+            valuePlbl.setText(Integer.toString(valueP));
+           // valuePlbl.setText(null);
+            
         }
 
         //System.out.println("The dealer is now at a value of " + valueD + ".");
